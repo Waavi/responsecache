@@ -1,6 +1,6 @@
 <?php
 
-namespace Waavi\ResponseCache\Test;
+namespace Waavi\ResponseCache\Test\SP;
 
 use Waavi\ResponseCache\Cache\RepositoryInterface;
 use Waavi\ResponseCache\Cache\TaggedRepository;
