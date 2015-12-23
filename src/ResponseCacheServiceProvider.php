@@ -3,6 +3,7 @@
 use Illuminate\Support\ServiceProvider;
 use Waavi\ResponseCache\Cache\RepositoryFactory;
 use Waavi\ResponseCache\Cache\RepositoryInterface;
+use Waavi\ResponseCache\Middleware\CacheMiddleware;
 
 class ResponseCacheServiceProvider extends ServiceProvider
 {
@@ -43,6 +44,8 @@ class ResponseCacheServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton('responsecache', ResponseCache::class);
+
+        $this->app[\Illuminate\Routing\Router::class]->middleware('cache', CacheMiddleware::class);
     }
 
     /**

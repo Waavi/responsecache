@@ -48,7 +48,7 @@ class ResponseParser
 
         if ($headerName) {
             $this->response = clone $this->response;
-            $response->headers->set($headerName, 'cached on ' . date('Y-m-d H:i:s'));
+            $this->response->headers->set($headerName, 'cached on ' . date('Y-m-d H:i:s'));
         }
         $content    = $this->response->getContent();
         $statusCode = $this->response->getStatusCode();

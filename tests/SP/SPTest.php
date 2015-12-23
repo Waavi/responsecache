@@ -26,6 +26,7 @@ class SPTest extends TestCase
     public function it_loads_the_facade()
     {
         $this->assertInstanceOf(ResponseCache::class, \App::make('responsecache'));
+        $this->assertInstanceOf(TaggedRepository::class, \ResponseCache::getRepository());
     }
 
     /**

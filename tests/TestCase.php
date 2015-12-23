@@ -4,6 +4,7 @@ namespace Waavi\ResponseCache\Test;
 
 use Illuminate\Database\Schema\Blueprint;
 use Orchestra\Testbench\TestCase as Orchestra;
+use Route;
 
 abstract class TestCase extends Orchestra
 {
@@ -79,33 +80,40 @@ abstract class TestCase extends Orchestra
      */
     protected function setUpRoutes($app)
     {
-        \Route::get('/', ['middleware' => 'cache', function () {
+        Route::any('/', ['middleware' => 'cache', function () {
+            return 'home of ' . (auth()->check() ? auth()->user()->id : 'anonymous');
+        }]);
+        Route::any('/random', ['middleware' => 'cache', function () {
             return str_random();
         }]);
-        \Route::post('/', ['middleware' => 'cache', function () {
-            return 'Whoops';
-        }]);
-        \Route::get('/no-cache', function () {
-            return str_random();
-        });
-        \Route::get('/redirect', function () {
+        Route::any('login/{id}', function ($id) {
+            auth()->login(User::find($id));
             return redirect('/');
         });
+        Route::any('empty', ['middleware' => 'cache', function () {
+            return '';
+        }]);
+        Route::get('/no-cache', function () {
+            return str_random();
+        });
+        Route::get('/redirect', ['middleware' => 'cache', function () {
+            return redirect('/');
+        }]);
     }
 
-    protected function assertCachedResponse(Response $response)
+    protected function assertCachedResponse($response)
     {
-        self::assertThat($response->headers->has('laravel-reponsecache'), self::isTrue(), 'Failed to assert that the response has been cached');
+        self::assertThat($response->headers->has('laravel-response-cache'), self::isTrue(), 'Failed to assert that the response has been cached');
     }
-    protected function assertRegularResponse(Response $response)
+    protected function assertRegularResponse($response)
     {
-        self::assertThat($response->headers->has('laravel-reponsecache'), self::isFalse(), 'Failed to assert that the response was not cached');
+        self::assertThat($response->headers->has('laravel-response-cache'), self::isFalse(), 'Failed to assert that the response was not cached');
     }
-    protected function assertSameResponse(Response $firstResponse, Response $secondResponse)
+    protected function assertSameResponse($firstResponse, $secondResponse)
     {
         self::assertThat($firstResponse->getContent() == $secondResponse->getContent(), self::isTrue(), 'Failed to assert that two response are the same');
     }
-    protected function assertDifferentResponse(Response $firstResponse, Response $secondResponse)
+    protected function assertDifferentResponse($firstResponse, $secondResponse)
     {
         self::assertThat($firstResponse->getContent() != $secondResponse->getContent(), self::isTrue(), 'Failed to assert that two response are the same');
     }
