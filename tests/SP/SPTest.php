@@ -2,6 +2,8 @@
 
 namespace Waavi\ResponseCache\Test;
 
+use Waavi\ResponseCache\Cache\RepositoryInterface;
+use Waavi\ResponseCache\Cache\TaggedRepository;
 use Waavi\ResponseCache\ResponseCache;
 use Waavi\ResponseCache\Test\TestCase;
 
@@ -24,5 +26,13 @@ class SPTest extends TestCase
     public function it_loads_the_facade()
     {
         $this->assertInstanceOf(ResponseCache::class, \App::make('responsecache'));
+    }
+
+    /**
+     *  @test
+     */
+    public function it_binds_the_repository_cache_interface()
+    {
+        $this->assertInstanceOf(TaggedRepository::class, \App::make(RepositoryInterface::class));
     }
 }

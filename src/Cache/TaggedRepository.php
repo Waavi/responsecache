@@ -2,7 +2,7 @@
 
 use Illuminate\Contracts\Cache\Store;
 
-class TaggedRepository implements CacheRepositoryInterface
+class TaggedRepository implements RepositoryInterface
 {
     /**
      * The cache store implementation.

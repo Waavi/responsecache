@@ -1,6 +1,8 @@
 <?php namespace Waavi\ResponseCache;
 
 use Illuminate\Support\ServiceProvider;
+use Waavi\ResponseCache\Cache\RepositoryFactory;
+use Waavi\ResponseCache\Cache\RepositoryInterface;
 
 class ResponseCacheServiceProvider extends ServiceProvider
 {
@@ -34,6 +36,12 @@ class ResponseCacheServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->bind(RepositoryInterface::class, function ($app) {
+            $cacheStore = $app['cache']->getStore();
+            $cacheTag   = $app['config']->get('responsecache.cache-tag');
+            return RepositoryFactory::make($cacheStore, $cacheTag);
+        });
+
         $this->app->singleton('responsecache', ResponseCache::class);
     }
 

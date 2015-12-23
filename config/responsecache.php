@@ -11,4 +11,7 @@ return [
     'headerName'  => 'laravel-response-cache',
 
     'withHeaders' => true,
+
+    // Cache tag to use if a taggable cache store is used
+    'cache-tag'   => 'waavi-response-cache',
 ];

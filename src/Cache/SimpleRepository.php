@@ -4,7 +4,7 @@ namespace Waavi\ResponseCache\Cache;
 
 use Illuminate\Contracts\Cache\Store;
 
-class SimpleRepository implements CacheRepositoryInterface
+class SimpleRepository implements RepositoryInterface
 {
     /**
      * The cache store implementation.

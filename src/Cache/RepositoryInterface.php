@@ -2,7 +2,7 @@
 
 namespace Waavi\ResponseCache\Cache;
 
-interface CacheRepositoryInterface
+interface RepositoryInterface
 {
     /**
      *  Checks if an entry with the given key exists in the cache.
