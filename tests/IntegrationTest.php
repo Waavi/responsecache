@@ -2,7 +2,6 @@
 namespace Waavi\ResponseCache\Test;
 
 use ResponseCache;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class IntegrationTest extends TestCase
 {
@@ -49,11 +48,11 @@ class IntegrationTest extends TestCase
      */
     public function it_will_not_cache_errors()
     {
-        $this->setExpectedException(NotFoundHttpException::class);
         $firstResponse  = $this->call('GET', '/notfound');
         $secondResponse = $this->call('GET', '/notfound');
         $this->assertRegularResponse($firstResponse);
         $this->assertRegularResponse($secondResponse);
+        $this->assertEquals('404', $firstResponse->getStatusCode());
     }
     /**
      * @test

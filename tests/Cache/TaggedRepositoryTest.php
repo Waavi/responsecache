@@ -25,7 +25,7 @@ class TaggedRepositoryTest extends TestCase
      */
     public function test_has_returns_true_if_entry()
     {
-        $this->repo->put('key', 'key', 'value');
+        $this->repo->put('key', 'value', 60);
         $this->assertTrue($this->repo->has('key'));
     }
 
