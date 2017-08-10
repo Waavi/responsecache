@@ -46,7 +46,7 @@ class ResponseCacheServiceProvider extends ServiceProvider
 
         $this->app->singleton('responsecache', ResponseCache::class);
 
-        $this->app[\Illuminate\Routing\Router::class]->middleware('cache', CacheMiddleware::class);
+        $this->app[\Illuminate\Routing\Router::class]->aliasMiddleware('cache', CacheMiddleware::class);
 
         $this->app->singleton('command.responsecache:clear', CacheClearCommand::class);
         $this->commands('command.responsecache:clear');
